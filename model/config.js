@@ -1,11 +1,24 @@
 import { Sequelize } from "sequelize";
 
+// export const sequelize = new Sequelize(
+//     'freedb_my_datas',
+//     'freedb_alfian',
+//     'VU$FN2Zu7fBkHk3',
+//      {
+//        host: 'sql.freedb.tech',
+//        dialect: 'mysql',
+//        dialectOptions: {
+//         connectTimeout:100000
+//         },
+//        port:3306
+//      }
+// );
 export const sequelize = new Sequelize(
-    'freedb_my_datas',
-    'freedb_alfian',
-    'VU$FN2Zu7fBkHk3',
+    'employee_express',
+    'root',
+    '1234567',
      {
-       host: 'sql.freedb.tech',
+       host: 'localhost',
        dialect: 'mysql',
        dialectOptions: {
         connectTimeout:100000

@@ -47,8 +47,15 @@ export const login = async(req,res)=>{
         if(!comparedPassword){
             return res.status(404).json({success:false,message:`Email or Password is wrong!`}) 
         }
-        const token = jwt.sign({id:user.id,isAdmin:user.isAdmin},process.env.JWT_SECRET_KEY,{expiresIn:"15d"})
-        return res.status(201).json({success:true,token})
+        const accessToken = jwt.sign({id:user.id,isAdmin:user.isAdmin},process.env.JWT_SECRET_KEY,{expiresIn:"15d"})
+        return res.status(201).json(
+            {
+                success:true,
+                accessToken,
+                userId:user.id,
+                isAdmin:user.isAdmin,
+                username:user.firstName
+            })
     } catch (error) {
         return res.status(500).json({success:false,message:`bla bla bla: ${error.message}`})
     }
