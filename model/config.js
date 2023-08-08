@@ -1,46 +1,32 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv"
 
-// export const sequelize = new Sequelize(
-//     'freedb_my_datas',
-//     'freedb_alfian',
-//     'VU$FN2Zu7fBkHk3',
-//      {
-//        host: 'sql.freedb.tech',
-//        dialect: 'mysql',
-//        dialectOptions: {
-//         connectTimeout:100000
-//         },
-//        port:3306
-//      }
-// );
+dotenv.config()
+
 export const sequelize = new Sequelize(
-    'employee_express',
-    'root',
-    '1234567',
-     {
-       host: 'localhost',
-       dialect: 'mysql',
-       dialectOptions: {
-        connectTimeout:100000
-        },
-       port:3306
-     }
+    process.env.DATABASE_NAME,
+    process.env.DATABASE_USERNAME,
+    process.env.DATABASE_PASSWORD,
+    {
+        host: process.env.DATABASE_HOST,
+        dialect: 'mysql',
+        port: 3306,
+        dialectOptions: {
+            connectTimeout:100000
+        }
+    }
 );
-
-
-export function db(){
-
+export function connectDb(){
     sequelize.authenticate().then(() => {
         console.log('Connection has been established successfully');
     }).catch((error) => {
         console.error('Unable to connect to the database: ', error);
     });
 
-    sequelize.sync({force:false}).then(() => {
-        console.log('Users2 table created successfully!');
+    const forceSync = true
+    sequelize.sync({force:forceSync}).then(() => {
+        console.log('table created successfully!');
     }).catch((error) => {
     console.error('Unable to create table : ', error);
     });
-    
-
 }

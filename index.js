@@ -5,7 +5,7 @@ import authRouter from "./router/authRouter.js";
 import userBookRouter from "./router/userBookRouter.js";
 import cors from "cors"
 import dotenv from "dotenv"
-import { db } from "./model/config.js";
+import { connectDb } from "./model/utils.js";
 
 const app = express()
 
@@ -31,7 +31,7 @@ app.get("/",(req,res)=>{
     res.send("Ini adalah benar bahwa demikian adanya")
 })
 app.listen(PORT,()=>{
-    db()
+    connectDb()
     console.log(`server is running at port ${PORT}`);
 })
 
