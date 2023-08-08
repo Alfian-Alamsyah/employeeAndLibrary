@@ -35,7 +35,7 @@ export const Users = sequelize.define("users", {
 },{underscored:true});
 
 
-Users.belongsTo(Books)
+Users.hasMany(Books)
 
 
 
