@@ -30,8 +30,10 @@ app.use(userBookRouter)
 app.get("/",(req,res)=>{
     res.send("Ini adalah benar bahwa demikian adanya")
 })
-app.listen(PORT,()=>{
-    connectDb()
-    console.log(`server is running at port ${PORT}`);
-})
 
+
+connectDb().then(()=>{
+    app.listen(PORT,()=>{
+        console.log(`server is running at port ${PORT}`);
+    })
+})

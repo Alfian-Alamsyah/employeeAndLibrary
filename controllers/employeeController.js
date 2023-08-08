@@ -58,7 +58,21 @@ export const updateEmployee = async (req,res)=>{
 
         return res.status(201).json({success:true,message:"employee data is updated",data:updatedEmployee})
     } catch (error) {
-        return res.status(500).json({success:false,message:`failed to update employee data: ${error.message}`})
+        const ValidationErrorItem = error.errors[0]
+        console.log("terjadi error");
+        console.log(error);
+        console.log("ValidationErrorItem");
+        console.log(ValidationErrorItem);
+
+        console.log(ValidationErrorItem.type);
+        console.log(ValidationErrorItem.path);
+        if(ValidationErrorItem.type == 'unique violation' && ValidationErrorItem.path == "email"){
+            return res.status(498).json({success:false,message:`failed to update employee data: alamat email sudah digunakan`})
+        }
+        if(ValidationErrorItem.type == 'unique violation' && ValidationErrorItem.path == "phone"){
+            return res.status(498).json({success:false,message:`failed to update employee data: nomer telepon sudah digunakan`})
+        }
+        return res.status(499).json({success:false,message:`failed to update employee data:`})
     }
 }
 
