@@ -16,17 +16,3 @@ export const sequelize = new Sequelize(
         }
     }
 );
-export function connectDb(){
-    sequelize.authenticate().then(() => {
-        console.log('Connection has been established successfully');
-    }).catch((error) => {
-        console.error('Unable to connect to the database: ', error);
-    });
-
-    const forceSync = true
-    sequelize.sync({force:forceSync}).then(() => {
-        console.log('table created successfully!');
-    }).catch((error) => {
-    console.error('Unable to create table : ', error);
-    });
-}

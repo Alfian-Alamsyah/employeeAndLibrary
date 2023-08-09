@@ -16,7 +16,12 @@ export const addEmployee = async (req,res)=>{
     })
         return res.status(201).json({success:true,message:"new Employee is created",data:newEmployee})
     } catch (error) {
-        return res.status(500).json({success:false,message:`failed to create new Review: ${error.message}`})
+        const ValidationErrorItem = error.errors[0]
+        console.log(ValidationErrorItem);
+        if(ValidationErrorItem.type == 'unique violation'){
+            return res.status(498).json({success:false,message:`failed to create employee data: ${ValidationErrorItem.message}`})
+        }
+        return res.status(499).json({success:false,message:`failed to create employee data:`})
     }
 }
 
@@ -59,18 +64,9 @@ export const updateEmployee = async (req,res)=>{
         return res.status(201).json({success:true,message:"employee data is updated",data:updatedEmployee})
     } catch (error) {
         const ValidationErrorItem = error.errors[0]
-        console.log("terjadi error");
-        console.log(error);
-        console.log("ValidationErrorItem");
         console.log(ValidationErrorItem);
-
-        console.log(ValidationErrorItem.type);
-        console.log(ValidationErrorItem.path);
-        if(ValidationErrorItem.type == 'unique violation' && ValidationErrorItem.path == "email"){
-            return res.status(498).json({success:false,message:`failed to update employee data: alamat email sudah digunakan`})
-        }
-        if(ValidationErrorItem.type == 'unique violation' && ValidationErrorItem.path == "phone"){
-            return res.status(498).json({success:false,message:`failed to update employee data: nomer telepon sudah digunakan`})
+        if(ValidationErrorItem.type == 'unique violation'){
+            return res.status(498).json({success:false,message:`failed to update employee data: ${ValidationErrorItem.message}`})
         }
         return res.status(499).json({success:false,message:`failed to update employee data:`})
     }

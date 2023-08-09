@@ -10,7 +10,7 @@ export async function connectDb(){
         console.error('Unable to connect to the database: ', error);
     });
 
-    const forceSync = false
+    const forceSync = true
 
     if(forceSync){
         await Books.drop()
